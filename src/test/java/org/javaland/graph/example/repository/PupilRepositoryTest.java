@@ -1,5 +1,6 @@
 package org.javaland.graph.example.repository;
 
+import org.javaland.graph.example.entity.Clazz;
 import org.javaland.graph.example.entity.Pupil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -22,16 +24,25 @@ public class PupilRepositoryTest {
 
     @Before
     public void setUp() {
+
+        Clazz mathematics = new Clazz();
+        mathematics.setName("Mathematik");
+
+        Clazz geography = new Clazz();
+        geography.setName("Erdkunde");
+
         Pupil ernst = new Pupil();
         ernst.setGivenName("Ernst");
         ernst.setFamilyName("Schlaumeyer");
         ernst.setAdditionalName("Von");
         ernst.setBirthDate(LocalDate.of(2009, 10, 11).toEpochDay());
+        ernst.addClazz(geography);
 
         Pupil susi = new Pupil();
         susi.setGivenName("Susanne");
         susi.setFamilyName("Fröhlich");
         susi.setBirthDate(LocalDate.of(2010, 1, 11).toEpochDay());
+        susi.setClazzes(Arrays.asList(mathematics, geography));
 
         pupilRepository.save(ernst);
         pupilRepository.save(susi);
@@ -49,7 +60,9 @@ public class PupilRepositoryTest {
         List<Pupil> pupils = pupilRepository.findByFamilyName("Fröhlich");
         Assert.assertNotNull(pupils);
         Assert.assertEquals(1, pupils.size());
-        Assert.assertEquals("Susanne", pupils.get(0).getGivenName());
+        Pupil susi = pupils.get(0);
+        Assert.assertEquals("Susanne", susi.getGivenName());
+        Assert.assertEquals(2, susi.getClazzes().size());
     }
 
     @After
