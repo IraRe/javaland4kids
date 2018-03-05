@@ -1,14 +1,13 @@
 package org.javaland.graph.example.entity;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity(label = "Class")
 public class Clazz {
 
-    @Id @GeneratedValue
+    @GraphId
     private Long id;
 
     @Index(unique = true)

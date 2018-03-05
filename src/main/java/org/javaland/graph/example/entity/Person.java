@@ -1,13 +1,12 @@
 package org.javaland.graph.example.entity;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
 public class Person {
 
-    @Id @GeneratedValue
+    @GraphId
     private Long id;
 
     private String familyName;
